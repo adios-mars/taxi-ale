@@ -11,16 +11,16 @@
 ---
 
 ## Table of Contents
-- [Problem & Motivation](#problem--motivation)
-- [UI/UX Design System & Figma Prototype](#uiux-design-system--figma-prototype)
-- [Key Features](#key-features)
-  - [1. Passenger Experience](#1-passenger-experience)
-  - [2. Driver Dashboard](#2-driver-dashboard)
-- [System Architecture & Technology Stack](#system-architecture--technology-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Engineering Highlights for Reviewers](#engineering-highlights-for-reviewers)
-- [License](#license)
+- [ Problem & Motivation](#problem--motivation)
+- [ UI/UX Design System & Figma Prototype](#uiux-design-system--figma-prototype)
+- [ Key Features](#key-features)
+  - [ Passenger Experience](#1-passenger-experience)
+  - [ Driver Dashboard](#2-driver-dashboard)
+- [ System Architecture & Technology Stack](#system-architecture--technology-stack)
+- [ Project Structure](#project-structure)
+- [ Getting Started](#getting-started)
+- [ Engineering Highlights for Reviewers](#engineering-highlights-for-reviewers)
+- [ License](#license)
 
 ---
 
@@ -115,3 +115,52 @@ lib/
 │       ├── driver_location_screen.dart # Driver GPS broadcast authorization
 │       └── driver_live_screen.dart     # Live broadcast map & seat counter (+/-)
 └── main.dart                           # Application entry point
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (v3.13.0 or higher)
+- Android Studio / VS Code with Flutter extension
+- Connected Android device or emulator (Android 8.0+ recommended)
+
+### Installation & Run
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/adios-mars/taxi-ale.git
+   cd taxi-ale
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Run code analysis:**
+   ```bash
+   flutter analyze
+   ```
+   *(Verified: 0 issues found)*
+
+4. **Launch the app:**
+   ```bash
+   flutter run
+   ```
+
+---
+
+## Engineering Highlights for Reviewers
+
+- **Zero-Cost Transit Tracking Architecture**: Instead of paying Google Maps Directions API fees per API call, implemented an open-source architecture utilizing OpenStreetMap and OSRM (Open Source Routing Machine), eliminating recurring cloud mapping bills.
+- **Two-Phase GPS Location Retrieval**: Implemented instant cached position reading (`getLastKnownPosition`) for immediate UI rendering, followed by accurate satellite fixes (`getCurrentPosition`), preventing blank map freezes.
+- **Offline In-Memory Terminal Registry**: Pre-indexed 30+ major Addis Ababa minibus terminals with English and Amharic names to deliver zero-latency autocomplete without unnecessary network calls.
+- **Debounced Geocoding**: Text inputs are debounced (600ms) before querying OpenStreetMap Nominatim to respect rate limits and reduce battery consumption.
+- **Responsive & Overflow-Safe**: Built with responsive layouts, `SingleChildScrollView` wrappers, and `resizeToAvoidBottomInset` safeguards to guarantee zero `RenderFlex` overflow errors across small screens and virtual keyboards.
+
+---
+
+## License
+This project is open-source under the [MIT License](LICENSE).
